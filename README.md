@@ -4,10 +4,13 @@
         <img src="https://img.shields.io/github/v/release/NuPlay/ExpandableText?label=version&labelColor=303840" alt="version">
     </a>
     <a href="https://swift.org/">
-        <img src="https://img.shields.io/badge/Swift-5.1+-F05138?labelColor=303840" alt="Swift: 5.1+">
+        <img src="https://img.shields.io/badge/Swift-5.5+-F05138?labelColor=303840" alt="Swift: 5.5+">
     </a>
     <a href="https://www.apple.com/ios/">
-        <img src="https://img.shields.io/badge/iOS-13.0+-007AFF?labelColor=303840" alt="iOS: 13.0+">
+        <img src="https://img.shields.io/badge/iOS-15.0+-007AFF?labelColor=303840" alt="iOS: 15.0+">
+    </a>
+    <a href="https://www.apple.com/macos/">
+        <img src="https://img.shields.io/badge/macOS-12.0+-007AFF?labelColor=303840" alt="macOS: 12.0+">
     </a>
     <a href="/LICENSE">
         <img src="https://img.shields.io/github/license/NuPlay/ExpandableText?color=blue&labelColor=303840" alt="license">        
