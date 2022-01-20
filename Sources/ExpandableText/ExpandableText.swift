@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct ExpandableText: View {
-    var text : String
+    var text : AttributedString
     
     var font: Font = .body
     var lineLimit : Int = 3
@@ -16,14 +16,16 @@ public struct ExpandableText: View {
     
     var expandButtonText : String = "more"
     var expandButtonColor : Color = .blue
-    
-    var uiFont: UIFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+    var generalFont: GeneralFont = GeneralFont.preferredFont(forTextStyle: GeneralFont.TextStyle.body)
     @State private var expand : Bool = false
     @State private var truncated : Bool = false
     @State private var size : CGFloat = 0
     
     
     public init(text: String) {
+        self.text = AttributedString(text)
+    }
+    public init(attributedString text: AttributedString) {
         self.text = text
     }
     public var body: some View {
@@ -48,15 +50,14 @@ public struct ExpandableText: View {
                                             Gradient.Stop(color: .clear, location: 0.8)]),
                                         startPoint: .leading,
                                         endPoint: .trailing)
-                                        .frame(width: 32, height: expandButtonText.heightOfString(usingFont: uiFont))
-                                    
+                                        .frame(width: 32, height: expandButtonText.heightOfString(usingFont: generalFont))
                                     Rectangle()
                                         .foregroundColor(.clear)
-                                        .frame(width: expandButtonText.widthOfString(usingFont: uiFont), alignment: .center)
+                                        .frame(width: expandButtonText.widthOfString(usingFont: generalFont), alignment: .center)
                                 }
                             }
                         }
-                        .frame(height: expandButtonText.heightOfString(usingFont: uiFont))
+                        .frame(height: expandButtonText.heightOfString(usingFont: generalFont))
                     }
                 )
             
@@ -77,10 +78,16 @@ public struct ExpandableText: View {
                     Color.clear.onAppear() {
                         let size = CGSize(width: geo.size.width, height: .greatestFiniteMagnitude)
                         
-                        let attributes:[NSAttributedString.Key:Any] = [NSAttributedString.Key.font: uiFont]
-                        let attributedText = NSAttributedString(string: text, attributes: attributes)
+//                        let attributes:[NSAttributedString.Key:Any] = [NSAttributedString.Key.font: generalFont]
+//                        let attributedText = NSAttributedString(string: text, attributes: attributes)
                         
-                        let textSize = attributedText.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil)
+                        let attributedText = NSAttributedString(text)
+                        #if os(macOS)
+                        let option = NSString.DrawingOptions.usesLineFragmentOrigin
+                        #elseif os(iOS)
+                        let option = NSStringDrawingOptions.usesLineFragmentOrigin
+                        #endif
+                        let textSize = attributedText.boundingRect(with: size, options: option, context: nil)
                         
                         if textSize.size.height > geo.size.height {
                             truncated = true

@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+#if os(iOS)
+public typealias GeneralFont = UIFont
+#elseif os(macOS)
+public typealias GeneralFont = NSFont
+#endif
 
 extension ExpandableText {
     public func font(_ font: Font) -> ExpandableText {
@@ -14,56 +19,56 @@ extension ExpandableText {
         if #available(iOS 14.0, *) {
             switch font {
             case .largeTitle:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .largeTitle)
             case .title:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .title1)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .title1)
             case .title2:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .title2)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .title2)
             case .title3:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .title3)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .title3)
             case .headline:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .headline)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .headline)
             case .subheadline:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .subheadline)
             case .callout:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .callout)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .callout)
             case .caption:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .caption1)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .caption1)
             case .caption2:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .caption2)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .caption2)
             case .footnote:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .footnote)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .footnote)
             case .body:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .body)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .body)
             default:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .body)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .body)
             }
         } else {
             switch font {
             case .largeTitle:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .largeTitle)
             case .title:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .title1)
-//            case .title2:
-//                result.uiFont = UIFont.preferredFont(forTextStyle: .title2)
-//            case .title3:
-//                result.uiFont = UIFont.preferredFont(forTextStyle: .title3)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .title1)
+                //            case .title2:
+                //                result.uiFont = UIFont.preferredFont(forTextStyle: .title2)
+                //            case .title3:
+                //                result.uiFont = UIFont.preferredFont(forTextStyle: .title3)
             case .headline:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .headline)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .headline)
             case .subheadline:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .subheadline)
             case .callout:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .callout)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .callout)
             case .caption:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .caption1)
-//            case .caption2:
-//                result.uiFont = UIFont.preferredFont(forTextStyle: .caption2)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .caption1)
+                //            case .caption2:
+                //                result.uiFont = UIFont.preferredFont(forTextStyle: .caption2)
             case .footnote:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .footnote)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .footnote)
             case .body:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .body)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .body)
             default:
-                result.uiFont = UIFont.preferredFont(forTextStyle: .body)
+                result.generalFont = GeneralFont.preferredFont(forTextStyle: .body)
             }
         }
         result.font = font
@@ -99,15 +104,30 @@ extension ExpandableText {
 }
 
 extension String {
+#if os(iOS)
     func heightOfString(usingFont font: UIFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = self.size(withAttributes: fontAttributes)
         return size.height
     }
-    
     func widthOfString(usingFont font: UIFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = self.size(withAttributes: fontAttributes)
         return size.width
     }
+#endif
+#if os(macOS)
+    func heightOfString(usingFont font: NSFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.height
+    }
+    func widthOfString(usingFont font: NSFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.width
+    }
+#endif
+    
+    
 }
